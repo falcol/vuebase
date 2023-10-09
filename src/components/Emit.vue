@@ -1,4 +1,6 @@
 <script setup>
+import { inject } from 'vue';
+
 const emit = defineEmits({
     accepted(payload) {
         return payload
@@ -19,6 +21,8 @@ function clickEmit() {
 //     },
 
 // }
+
+const author_provide = inject("author_provide")
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, reactive, ref } from 'vue';
+import { computed, onMounted, provide, reactive, ref } from 'vue';
 import { useCounterStore } from '../stores/counter';
 import Emit from './Emit.vue';
 defineProps({
@@ -58,6 +58,7 @@ const checkEmit = (x) => {
     console.log(x);
 }
 
+provide('author_provide', author)
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, provide, reactive, ref } from 'vue';
+import { computed, onMounted, provide, reactive, ref, watch } from 'vue';
 import { useCounterStore } from '../stores/counter';
 import Emit from './Emit.vue';
 defineProps({
@@ -59,6 +59,24 @@ const checkEmit = (x) => {
 }
 
 provide('author_provide', author)
+
+const question = ref('')
+const answer = ref('Questions usually contain a question mark. ;-)')
+
+// watch works directly on a ref
+// eslint-disable-next-line no-unused-vars
+watch(question, async (newQuestion, oldQuestion) => {
+    console.log(newQuestion, oldQuestion);
+    if (newQuestion.indexOf('?') > -1) {
+        answer.value = 'Thinking...'
+        try {
+            const res = await fetch('https://yesno.wtf/api')
+            answer.value = (await res.json()).answer
+        } catch (error) {
+            answer.value = 'Error! Could not reach the API. ' + error
+        }
+    }
+})
 </script>
 
 <template>
@@ -70,7 +88,8 @@ provide('author_provide', author)
             <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>.
         </h3>
         <br />
-        <PButton @click="store.increment()" class="mr-2" outlined>Count is: {{ store.count }} - {{ store.doubleCount }}</PButton>
+        <PButton @click="store.increment()" class="mr-2" outlined>Count is: {{ store.count }} - {{ store.doubleCount }}
+        </PButton>
         <PButton @click="store.$reset" class="mr-2" outlined>Reset</PButton>
         <span>{{ textData }}</span>
         <InputText type="text" v-model="textData" />
@@ -78,7 +97,12 @@ provide('author_provide', author)
         <div>{{ fullName }} - {{ publishedBooksMessage }}</div>
         <div>{{ books }} - {{ map.get('count') }}</div>
         <PButton type="button" label="Messages" icon="pi pi-users" badge="8" badgeClass="p-badge-danger" outlined />
-        <Emit @accepted="checkEmit"/>
+        <Emit @accepted="checkEmit" />
+        <p>
+            Watch: Ask a yes/no question:
+            <InputText v-model="question" />
+        </p>
+        <p>{{ answer }}</p>
     </div>
 </template>
 
@@ -100,6 +124,7 @@ h3 {
 }
 
 @media (min-width: 1024px) {
+
     .greetings h1,
     .greetings h3 {
         text-align: left;

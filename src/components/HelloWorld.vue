@@ -88,15 +88,15 @@ watch(question, async (newQuestion, oldQuestion) => {
             <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>.
         </h3>
         <br />
-        <PButton @click="store.increment()" class="mr-2" outlined>Count is: {{ store.count }} - {{ store.doubleCount }}
-        </PButton>
-        <PButton @click="store.$reset" class="mr-2" outlined>Reset</PButton>
+        <Button @click="store.increment()" class="mr-2" outlined>Count is: {{ store.count }} - {{ store.doubleCount }}
+        </Button>
+        <Button @click="store.$reset" class="mr-2" outlined>Reset</Button>
         <span>{{ textData }}</span>
         <InputText type="text" v-model="textData" />
         <div :class="classObject">{{ classObject }}</div>
         <div>{{ fullName }} - {{ publishedBooksMessage }}</div>
         <div>{{ books }} - {{ map.get('count') }}</div>
-        <PButton type="button" label="Messages" icon="pi pi-users" badge="8" badgeClass="p-badge-danger" outlined />
+        <Button type="button" label="Messages" icon="pi pi-users" badge="8" badgeClass="p-badge-danger" outlined />
         <Emit @accepted="checkEmit" />
         <p>
             Watch: Ask a yes/no question:

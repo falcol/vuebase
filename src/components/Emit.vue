@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
 import { inject } from 'vue';
 
@@ -23,11 +24,12 @@ function clickEmit() {
 // }
 
 const author_provide = inject("author_provide")
+console.log(author_provide);
 </script>
 
 <template>
     <div>
-        <PButton label="Primary" @click="clickEmit" rounded />
+        <Button label="Primary" @click="clickEmit" rounded />
     </div>
 </template>
 
